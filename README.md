@@ -8,7 +8,7 @@ GET /bots - Get the list of all bots
 POST /bots - Create a new bot
 GET /bots/{botId} - Get info about a specified bot
 PUT /bots/{botId} - Update a bot
-DELETE /bots/{botId} - Delete abot
+DELETE /bots/{botId} - Delete a bot
 ```
 
 Management of bots status : 
@@ -19,19 +19,19 @@ PUT /bots/{botId}/status - Update the status of a bot (online, idle, invisible, 
 Management of Riverscript files :
 ```
 GET /bots/{botId}/rivescript - Get Rivescript file of a bot
-PUT /bots/{botId}/rivescript - Update Riverscript bot
+PUT /bots/{botId}/rivescript - Update a Rivescript bot
 ```
-Management of chats : 
+Management of conversations : 
 ```
-GET /bots/{botId}/chats - Get chats of a bot 
+GET /bots/{botId}/conversations - Get conversations of a bot 
 ```
 ### Bonus endpoint
-Analysis of chats  :
+Analysis of conversations  :
 ```
-GET /chats - Get all chats
-GET /chats/analytics - Get analytics about chats
+GET /conversations - Get all conversations
+GET /conversations/analytics - Get analytics about conversations
 ```
 Monitoring : 
 ```
-GET /monitoring - Get monitoring informations in real time
+GET /monitoring - Get monitoring information in real time
 ```

@@ -1,6 +1,17 @@
 {
   "dependencies": {
     "discord.js": "^14.19.3",
+    "dotenv": "^16.5.0",
     "rivescript": "^2.2.1"
-  }
+  },
+  "name": "cacophonie",
+  "version": "1.0.0",
+  "description": "## Endpoints ### Main endpoints Management of bots :  ``` GET /bots - Get the list of all bots POST /bots - Create a new bot GET /bots/{botId} - Get info about a specified bot PUT /bots/{botId} - Update a bot DELETE /bots/{botId} - Delete a bot ```",
+  "main": "backend/rivescript/bot1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

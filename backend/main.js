@@ -1,3 +1,8 @@
+/**
+ * @file Main file. Creates the express app.
+ * @module main.js
+ */
+
 const express = require('express');
 const cors = require('cors');
 const routes = require('./api/routes');

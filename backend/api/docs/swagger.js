@@ -1,3 +1,8 @@
+/**
+ * @file Creates swagger doc.
+ * @module docs/swagger.js
+ */
+
 const express = require('express');
 const router = express.Router();
 

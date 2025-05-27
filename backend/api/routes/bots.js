@@ -1,3 +1,8 @@
+/**
+ * @file Creates the routes for the bots part
+ * @module routes/bots.js
+ */
+
 const express = require('express');
 const router = express.Router();
 const botController = require('../controllers/botController');

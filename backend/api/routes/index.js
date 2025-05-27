@@ -1,3 +1,8 @@
+/**
+ * @file API routes. Creates the routes (endpoints).
+ * @module routes/index.js
+ */
+
 const express = require('express');
 const router = express.Router();
 const botRoutes = require('./bots');

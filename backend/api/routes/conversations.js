@@ -1,3 +1,8 @@
+/**
+ * @file Creates the routes for the conversations part
+ * @module routes/conversations.js
+ */
+
 const express = require('express');
 const router = express.Router();
 const conversationController = require('../controllers/conversationController');

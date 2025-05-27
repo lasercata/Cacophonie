@@ -2,7 +2,7 @@
 
 ## Endpoints
 ### Main endpoints
-- Management of bots : 
+- Management of bots:
 ```
 GET /bots - Get the list of all bots
 POST /bots - Create a new bot
@@ -11,7 +11,7 @@ PATCH /bots/{botId} - Update a bot
 DELETE /bots/{botId} - Delete a bot
 ```
 
-- Management of bots status : 
+- Management of bots status:
 <!-- ``` -->
 <!-- GET /bots/{botId}/status - Get the status of a bot -->
 <!-- PATCH /bots/{botId}/status - Update the status of a bot (online, idle, invisible, doNotDisturb) -->
@@ -19,7 +19,7 @@ DELETE /bots/{botId} - Delete a bot
 
 The status is a property of `/bots/{botId}`.
 
-- Management of Rivescript files :
+- Management of Rivescript files:
 <!-- ``` -->
 <!-- GET /bots/{botId}/rivescript - Get Rivescript file of a bot -->
 <!-- PATCH /bots/{botId}/rivescript - Update a Rivescript bot -->
@@ -27,16 +27,21 @@ The status is a property of `/bots/{botId}`.
 
 The rivescript file is a property of `/bots/{botId}`.
 
-- Management of conversations : 
+- Management of conversations: 
 ```
 GET /bots/{botId}/conversations - Get conversations of a bot 
 ```
 
 ### Bonus endpoints
-- Analysis of conversations  :
+- Analysis of conversations:
 ```
 GET /conversations - Get all conversations
 GET /conversations/analytics - Get analytics about conversations
+```
+
+- Documentation of the endpoints:
+```
+GET /api/docs
 ```
 
 ## Project Structure

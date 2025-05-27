@@ -1,0 +1,22 @@
+{
+    "name": "Cacophonie",
+    "version": "1.0.0",
+    "description": "node web rest project",
+    "type": "commonjs",
+    "main": "backend/main.js",
+    "scripts": {
+        "start": "node backend/main.js",
+        "start_auto_restart": "nodemon backend/main.js",
+        "gen-doc": "jsdoc -c jsdoc.json"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1"
+    },
+    "devDependencies": {
+        "docdash": "^2.0.2",
+        "jsdoc": "^4.0.4",
+        "nodemon": "^3.1.9"
+    }
+}

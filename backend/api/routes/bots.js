@@ -2,19 +2,49 @@ const express = require('express');
 const router = express.Router();
 const botController = require('../controllers/botController');
 
-// route GET /api/bots
+/**
+ * @swagger
+ * /api/bots:
+ *   get:
+ *     summary: Get the list of all bots
+ *     description: Get the list of all bots.
+ */
 router.get('/', botController.getAllBots);
 
-// route POST /api/bots
+/**
+ * @swagger
+ * /api/bots:
+ *   post:
+ *     summary: Creates a new bot
+ *     description: Creates a new bot.
+ */
 router.post('/', botController.createBot);
 
-// @route GET /api/bots/:id
+/**
+ * @swagger
+ * /api/bots/:id:
+ *   get:
+ *     summary: Get informations about a specified bot
+ *     description: Get informations about a specified bot.
+ */
 router.get('/:id', botController.getBotById);
 
-// route PATCH /api/bots/:id
+/**
+ * @swagger
+ * /api/bots/:id:
+ *   patch:
+ *     summary: Update a bot
+ *     description: Update a bot.
+ */
 router.patch('/:id', botController.updateBot);
 
-// route DELETE /api/bots/:id
+/**
+ * @swagger
+ * /api/bots/:id:
+ *   delete:
+ *     summary: Delete a bot
+ *     description: Delete a bot.
+ */
 router.delete('/:id', botController.deleteBot);
 
 // // route GET /api/bots/:id/status
@@ -29,7 +59,13 @@ router.delete('/:id', botController.deleteBot);
 // // route PATCH /api/bots/:id/rivescript
 // router.patch('/:id/rivescript', botController.updateBotRivescript);
 
-// route GET /bots/{botId}/conversations
+/**
+ * @swagger
+ * /api/bots/:id/conversations:
+ *   get:
+ *     summary: Get all the conversations
+ *     description: Get all the conversations.
+ */
 router.get('/:id/conversations', botController.getConversationsByBotId);
 
 module.exports = router;

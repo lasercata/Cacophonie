@@ -4,13 +4,13 @@ const botRoutes = require('./bots');
 const conversationRoutes = require('./conversations');
 
 router.get('/', (req, res) => {
-  res.json({ //Json description of the API when we do /api
-    message: 'API Cacophonie',
-    endpoints: {
-      bots: '/api/bots',
-      conversations: '/api/conversations'
-    }
-  });
+    res.json({ // Json description of the API when we do /api
+        message: 'API Cacophonie',
+        endpoints: {
+            bots: '/api/bots',
+            conversations: '/api/conversations'
+        }
+    });
 });
 
 router.use('/bots', botRoutes);

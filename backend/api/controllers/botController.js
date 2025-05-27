@@ -1,12 +1,27 @@
 //Todo : implement following functions
 
-exports.getAllBots = async (req, res) => {};
-exports.createBot = async (req, res) => {};
-exports.getBotById = async (req, res) => {};
-exports.updateBot = async (req, res) => {};
-exports.deleteBot = async (req, res) => {};
-exports.getBotStatus = async (req, res) => {};
-exports.updateBotStatus = async (req, res) => {};
-exports.getBotRivescript = async (req, res) => {};
-exports.updateBotRivescript = async (req, res) => {};
-exports.getConversationsByBotId = async(req,res) => {};
+const e = require("express");
+
+getAllBots = async (req, res) => {};
+createBot = async (req, res) => {};
+getBotById = async (req, res) => {};
+updateBot = async (req, res) => {};
+deleteBot = async (req, res) => {};
+getBotStatus = async (req, res) => {};
+updateBotStatus = async (req, res) => {};
+getBotRivescript = async (req, res) => {};
+updateBotRivescript = async (req, res) => {};
+getConversationsByBotId = async(req,res) => {};
+
+module.exports = {
+    getAllBots,
+    createBot,
+    getBotById,
+    updateBot,
+    deleteBot,
+    getBotStatus,
+    updateBotStatus,
+    getBotRivescript,
+    updateBotRivescript,
+    getConversationsByBotId
+}

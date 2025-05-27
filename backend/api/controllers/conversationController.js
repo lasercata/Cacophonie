@@ -1,4 +1,9 @@
 //Todo : implement following functions
 
-exports.getAllConversations = async (req, res) => {};
-exports.getConversationsAnalytics = async (req, res) => {};
+getAllConversations = async (req, res) => {};
+getConversationsAnalytics = async (req, res) => {};
+
+module.exports = {
+    getAllConversations,
+    getConversationsAnalytics
+}

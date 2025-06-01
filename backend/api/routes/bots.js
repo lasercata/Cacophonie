@@ -8,7 +8,7 @@ router.get('/', botController.getAllBots);
 // route POST /api/bots
 router.post('/', botController.createBot);
 
-// @route GET /api/bots/:id
+// route GET /api/bots/:id
 router.get('/:id', botController.getBotById);
 
 // route PUT /api/bots/:id

@@ -26,12 +26,11 @@ app.get('/', (req, res) => {
   res.send("Welcome to our Api");
 });
 
-app.listen(PORT, () => {
-  console.log(`Cacaphonie server start on ${PORT} port`);
-  
-  // Initialization of workers (discord bots)
-  //require a function from ./workers
-  
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Cacaphonie server started on port ${PORT}`);
+    // workers call
+  });
+}
 
 module.exports = app;

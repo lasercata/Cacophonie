@@ -11,6 +11,6 @@ const conversationController = require('../controllers/conversationController');
 router.get('/', conversationController.getAllConversations);
 
 // route GET /api/conversations/analytics
-router.get('/analytics', conversationController.getConversationsAnalytics);
+//router.get('/analytics', conversationController.getConversationsAnalytics);
 
 module.exports = router;

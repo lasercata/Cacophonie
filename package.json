@@ -12,7 +12,10 @@
     "dependencies": {
         "cors": "^2.8.5",
         "swagger-jsdoc": "^6.2.8",
-        "swagger-ui-express": "^5.0.1"
+        "swagger-ui-express": "^5.0.1",
+        "discord.js": "^14.19.3",
+        "dotenv": "^16.5.0",
+        "rivescript": "^2.2.1"
     },
     "devDependencies": {
         "docdash": "^2.0.2",

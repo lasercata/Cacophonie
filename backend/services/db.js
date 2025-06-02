@@ -6,10 +6,11 @@ const db = new Database({ path: file });
 
 
 if (!db.has("bots")) {
-  db.set("bots", []);
+    db.set("bots", []);
 }
+
 if (!db.has("conversations")) {
-  db.set("conversations", []);
+    db.set("conversations", []);
 }
 
 module.exports = db;

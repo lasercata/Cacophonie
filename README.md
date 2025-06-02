@@ -1,5 +1,41 @@
 # Cacophonie
 
+## Setup
+### Download
+Download the project:
+```
+git clone https://github.com/lasercata/Cacophonie.git
+cd Cacophonie/
+```
+
+Install the node modules:
+```
+npm install
+```
+
+### Documentation
+To generate the documentation, run
+```
+npm run gen-doc
+```
+
+### Tests
+To launch the tests, run
+```
+npm run tests
+```
+
+### Launch server
+To launch the server, run
+```
+npm run start
+```
+
+And to start it with auto restart, run
+```
+npm run start_auto_restart
+```
+
 ## Endpoints
 ### Main endpoints
 - Management of bots:
@@ -72,7 +108,7 @@ cacophonie/
 │   │        └── swagger.json # ?
 │   │
 │   ├── services/ #data_access in his repo
-│   │   ├── robotService.js       
+│   │   ├── robotService.js
 │   │   └── conversationService.js
 │   │
 │   ├── workers/

@@ -7,7 +7,7 @@
     "scripts": {
         "start": "node backend/main.js",
         "start_auto_restart": "nodemon backend/main.js",
-        "test": "jest",
+        "tests": "jest",
         "gen-doc": "jsdoc -c jsdoc.json"
     },
     "dependencies": {

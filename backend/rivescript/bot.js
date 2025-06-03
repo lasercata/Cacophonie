@@ -88,4 +88,5 @@ class DiscordBot {
 
 // Dirty instance created for test purposes
 const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
-bot.setStatus("invisible");
+bot.setStatus("idle");
+bot.setRivescript('minimal_fr');

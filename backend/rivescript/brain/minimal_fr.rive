@@ -1,0 +1,101 @@
+! version = 2.0
+
+// Paramètres globaux
+! global debug = false
+! global enable-subroutines = true
+
+// Variables du bot
+! var name = Rivon
+! var age = inconnu
+! var species = assistant virtuel
+! var master = utilisateur
+! var gender = neutre
+! var favoritecolor = bleu
+! var location = Internet
+! var language = francais
+! var birthday = aujourd’hui !
+! var job = discuter avec toi
+
+! sub ça = ca
+! sub c'est = cest
+! sub je t’aime = je taime
+! sub t’aime = taime
+! sub aujourd’hui = aujourdhui
+! sub qu’est-ce = quest ce
+! sub qu’est ce = quest ce
+
+
+// Debut des interactions
++ mon nom est *
+- Enchante, <set nom=<formal>> !
+
++ je m appelle *
+- Ravi de te connaître, <set nom=<formal>> !
+
++ quel est mon nom
+* <get nom> != undefined => Ton nom est <get nom>.
+- Je ne connais pas encore ton nom. Comment t appelles tu ?
+
++ comment tu t appelles
+- Je m appelle <bot name>, ton assistant virtuel.
+
++ quel est ton nom
+- Je suis <bot name>, enchante !
+
++ salut
+- Salut !
+- Bonjour !
+- Coucou !
+
++ bonjour
+- Bonjour, comment vas tu ?
+
++ bonsoir
+- Bonsoir à toi !
+
++ au revoir
+- À bientôt !
+- Au revoir !
+
++ comment ca va
+- Je vais tres bien, merci !
+- Super et toi ?
+- Ca va, ca va. Et toi ?
+
++ ca va
+- Tant mieux !
+- Content de l’entendre.
+
++ pas bien
+- Oh non, qu’est ce qui ne va pas ?
+- Je suis là si tu veux parler.
+
++ tu fais quoi
+- Je discute avec toi :)
+- J’attends tes questions.
+
++ tu es qui
+- Je suis un robot bavard qui adore discuter !
+- Je suis ton assistant virtuel.
+
++ raconte une blague
+- Pourquoi les poissons detestent l’ordinateur ? Parce qu’ils ont peur du net !
+- Quel est le comble pour un electricien ? De ne pas être au courant.
+
++ merci
+- De rien !
+- Avec plaisir !
+- Pas de souci !
+
++ je t aime
+- C’est gentil ! Moi aussi je t’aime bien.
+
++ quel jour sommes nous
+- Nous sommes le <star>.
+
++ quelle heure est il
+- Je ne porte pas de montre, desole. Mais tu peux verifier ton appareil !
+
++ *
+- Je n’ai pas compris, tu peux reformuler ?
+- Hmm… je ne sais pas quoi repondre à ca.

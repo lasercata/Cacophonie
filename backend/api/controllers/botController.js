@@ -97,7 +97,27 @@ function updateBot(req, res) {
             return res.status(400).json({ error: 'Invalid bot id' });
         }
 
-        const data = req.body;
+        data = {};
+        if (req.query.name !== undefined)
+            data['name'] = req.query.name;
+
+        if (req.query.status !== undefined) {
+            const st = req.query.status;
+
+            if (! ['invisible', 'online', 'dnd', 'idle'].includes(st))
+                return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
+
+            data['status'] = st;
+        }
+
+        if (req.query.rivescript !== undefined) {
+            //TODO: make checks here
+
+            data['rivescript'] = req.query.rivescript;
+        }
+
+        console.log(data);
+        // const data = req.body;
         const updatedBot = botService.updateBot(id, data);
 
         if (!updatedBot) {

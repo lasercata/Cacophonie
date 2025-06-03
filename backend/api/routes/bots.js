@@ -94,6 +94,30 @@ router.get('/:id', botController.getBotById);
  *           type: integer
  *           format: int64
  *
+ *       - name: name
+ *         in: query
+ *         description: new name to set to the bot
+ *         schema:
+ *           type: string
+ *
+ *       - name: status
+ *         in: query
+ *         description: new status to set to the bot
+ *         schema:
+ *           type: string
+ *           default: invisible
+ *           enum:
+ *             - invisible
+ *             - online
+ *             - idle
+ *             - dnd
+ *
+ *       - name: rivescript
+ *         in: query
+ *         description: new path to the rivescript to use
+ *         schema:
+ *           type: string
+ *
  *     responses:
  *       '200':
  *         description: successful operation

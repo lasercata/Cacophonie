@@ -11,12 +11,15 @@ describe('Bots API', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  it('POST /api/bots - should create a new bot', async () => {
+  it('POST /api/bots - should create a new bot with default rivescript', async () => {
     const botData = { name: 'TestBot', status: 'online' };
     const res = await request(app).post('/api/bots').send(botData);
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('id');
     expect(res.body.name).toBe(botData.name);
+    expect(res.body.status).toBe(botData.status);
+    expect(res.body.rivescript).toBe('backend/rivescript/brain/english.rive');
+
     createdBotId = res.body.id;
   });
 
@@ -32,6 +35,23 @@ describe('Bots API', () => {
       .send({ name: 'UpdatedBot' });
     expect(res.statusCode).toBe(200);
     expect(res.body.name).toBe('UpdatedBot');
+  });
+
+  it('PATCH /api/bots/:id/status - should update the bot status', async () => {
+    const res = await request(app)
+      .patch(`/api/bots/${createdBotId}/status`)
+      .send({ status: 'offline' });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.status).toBe('offline');
+  });
+
+  it('PATCH /api/bots/:id/rivescript - should update the bot rivescript path', async () => {
+    const newPath = 'backend/rivescript/brain/french.rive';
+    const res = await request(app)
+      .patch(`/api/bots/${createdBotId}/rivescript`)
+      .send({ rivescript: newPath });
+    expect(res.statusCode).toBe(200);
+    expect(res.body.rivescript).toBe(newPath);
   });
 
   it('DELETE /api/bots/:id - should delete the bot', async () => {

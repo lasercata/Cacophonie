@@ -1,6 +1,6 @@
 /**
  * @file Model representing a chatbot instance.
- * @module models/Bot
+ * @module models/Bot.js
  */
 
 /**

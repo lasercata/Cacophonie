@@ -64,14 +64,14 @@ function getBotById(req, res) {
  */
 function createBot(req, res) {
     try {
-        const data = req.body;
+        const data = req.query;
 
         if (!data.name) {
             return res.status(400).json({ error: 'name is required' });
         }
-        if (!data.status) {
-            return res.status(400).json({ error: 'status is required' }); //TODO: do we really need the status to create a bot ?
-        }
+
+        if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
+            return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
         const newBot = botService.createBot(data);
         res.status(201).json(newBot);
@@ -97,7 +97,11 @@ function updateBot(req, res) {
             return res.status(400).json({ error: 'Invalid bot id' });
         }
 
-        const data = req.body;
+        const data = req.query;
+
+        if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
+            return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
+
         const updatedBot = botService.updateBot(id, data);
 
         if (!updatedBot) {

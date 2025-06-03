@@ -31,28 +31,41 @@ router.get('/', botController.getAllBots);
  *     summary: Creates a new bot
  *     description: Creates a new bot.
  *
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               status:
- *                 type: string
- *                 default: off
+ *     parameters:
+ *       - name: name
+ *         required: true
+ *         in: query
+ *         description: name of the bot
+ *         schema:
+ *           type: string
+ *
+ *       - name: status
+ *         in: query
+ *         description: status to set to the bot
+ *         schema:
+ *           type: string
+ *           default: invisible
+ *           enum:
+ *             - invisible
+ *             - online
+ *             - idle
+ *             - dnd
+ *
+ *       - name: rivescript
+ *         in: query
+ *         description: path to the rivescript to use
+ *         schema:
+ *           type: string
  *
  *     responses:
  *       '201':
  *         description: successful operation
  *       '400':
- *         description: error (name and status are required)
+ *         description: error (name is required)
  *       '500':
  *         description: server error
  */
-router.post('/', botController.createBot); //TODO: change the enum above
+router.post('/', botController.createBot);
 
 /**
  * @swagger
@@ -94,9 +107,34 @@ router.get('/:id', botController.getBotById);
  *           type: integer
  *           format: int64
  *
+ *       - name: name
+ *         in: query
+ *         description: new name to set to the bot
+ *         schema:
+ *           type: string
+ *
+ *       - name: status
+ *         in: query
+ *         description: new status to set to the bot
+ *         schema:
+ *           type: string
+ *           enum:
+ *             - invisible
+ *             - online
+ *             - idle
+ *             - dnd
+ *
+ *       - name: rivescript
+ *         in: query
+ *         description: new path to the rivescript to use
+ *         schema:
+ *           type: string
+ *
  *     responses:
  *       '200':
  *         description: successful operation
+ *       '400':
+ *         description: error in arguments
  *       '404':
  *         description: bot not found
  */
@@ -125,42 +163,6 @@ router.patch('/:id', botController.updateBot);
  *         description: bot not found
  */
 router.delete('/:id', botController.deleteBot);
-
-/**
- * @swagger
- * /api/bots/:id/status:
- *   get:
- *     summary: Get a bot status
- *     description: Get a bot status.
- */
-router.get('/:id/status', botController.getBotStatus);
-
-/**
- * @swagger
- * /api/bots/:id/status:
- *   update:
- *     summary: Update  a  bot status
- *     description: Update a bot status.
- */
-router.patch('/:id/status', botController.updateBotStatus);
-
-/**
- * @swagger
- * /api/bots/:id/rivescript:
- *   get:
- *     summary: Get  a  bot rivescript
- *     description: Get a  bot rivescript.
- */
-router.get('/:id/rivescript', botController.getBotRivescript);
-
-/**
- * @swagger
- * /api/bots/:id/rivescript:
- *   patch:
- *     summary: Update  a  bot rivescript
- *     description: Update a  bot rivescript.
- */
-router.patch('/:id/rivescript', botController.updateBotRivescript);
 
 /**
  * @swagger

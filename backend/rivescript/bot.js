@@ -27,6 +27,7 @@ class DiscordBot {
         this.client.once("ready", () => {
             console.log(`✅ Logged in as ${this.client.user.tag}!`);
             console.log(this.client.user);
+            this.getStatus()
         });
 
         // Message handling
@@ -41,6 +42,22 @@ class DiscordBot {
         this.client.login(token);
         this.loadBehabiour();
     }
+
+    /**
+     * Gets the bot's current status.
+     * @returns {string|null} The current status ('idle', 'online', 'invisible', 'dnd') or null if not available
+     */
+    getStatus() {
+        if (this.client.user && this.client.user.presence) {
+            const status = this.client.user.presence.status;
+            console.log(`Current status is: ${status}`);
+            return status;
+        } else {
+            console.log("❌ Error: Could not retrieve status.");
+            return null;
+        }
+    }
+
 
     /**
      * Sets the bot's status.
@@ -88,5 +105,5 @@ class DiscordBot {
 
 // Dirty instance created for test purposes
 const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
-bot.setStatus("idle");
+bot.setStatus("dnd");
 bot.setRivescript('minimal_fr');

@@ -47,14 +47,19 @@ class DiscordBot {
      * @param {string} status wanted status in {'idle', 'online', 'Invisible', 'dnd'}
      */
     setStatus(status) {
-        if (status in ['idle', 'online', 'Invisible', 'dnd']) {
-            this.client.once("ready", () => {
-                console.log(`Changing status to : ${status}`);
+        const validStatuses = ["idle", "online", "invisible", "dnd"];
+        if (validStatuses.includes(status)) {
+            if (this.client.user) {
+                console.log(`Changing status to: ${status}`);
                 this.client.user.setStatus(status);
-            });
-        }
-        else {
-            console.log("❌ Error : status not handled !")
+            } else {
+                this.client.once("ready", () => {
+                    console.log(`Changing status to: ${status}`);
+                    this.client.user.setStatus(status);
+                });
+            }
+        } else {
+            console.log("❌ Error: status not handled!");
         }
     }
 
@@ -83,4 +88,4 @@ class DiscordBot {
 
 // Dirty instance created for test purposes
 const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
-bot.setStatus("dnd");
+bot.setStatus("invisible");

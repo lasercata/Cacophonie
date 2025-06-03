@@ -31,24 +31,36 @@ router.get('/', botController.getAllBots);
  *     summary: Creates a new bot
  *     description: Creates a new bot.
  *
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               status:
- *                 type: string
- *                 default: invisible
+ *     parameters:
+ *       - name: name
+ *         required: true
+ *         in: query
+ *         description: name of the bot
+ *         schema:
+ *           type: string
+ *
+ *       - name: status
+ *         in: query
+ *         description: status to set to the bot
+ *         schema:
+ *           type: string
+ *           enum:
+ *             - invisible
+ *             - online
+ *             - idle
+ *             - dnd
+ *
+ *       - name: rivescript
+ *         in: query
+ *         description: path to the rivescript to use
+ *         schema:
+ *           type: string
  *
  *     responses:
  *       '201':
  *         description: successful operation
  *       '400':
- *         description: error (name and status are required)
+ *         description: error (name is required)
  *       '500':
  *         description: server error
  */
@@ -120,6 +132,8 @@ router.get('/:id', botController.getBotById);
  *     responses:
  *       '200':
  *         description: successful operation
+ *       '400':
+ *         description: error in arguments
  *       '404':
  *         description: bot not found
  */

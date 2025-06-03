@@ -64,11 +64,14 @@ function getBotById(req, res) {
  */
 function createBot(req, res) {
     try {
-        const data = req.body;
+        const data = req.query;
 
         if (!data.name) {
             return res.status(400).json({ error: 'name is required' });
         }
+
+        if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
+            return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
         const newBot = botService.createBot(data);
         res.status(201).json(newBot);
@@ -94,27 +97,11 @@ function updateBot(req, res) {
             return res.status(400).json({ error: 'Invalid bot id' });
         }
 
-        data = {};
-        if (req.query.name !== undefined)
-            data['name'] = req.query.name;
+        const data = req.query;
 
-        if (req.query.status !== undefined) {
-            const st = req.query.status;
+        if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
+            return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
-            if (! ['invisible', 'online', 'dnd', 'idle'].includes(st))
-                return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
-
-            data['status'] = st;
-        }
-
-        if (req.query.rivescript !== undefined) {
-            //TODO: make checks here
-
-            data['rivescript'] = req.query.rivescript;
-        }
-
-        console.log(data);
-        // const data = req.body;
         const updatedBot = botService.updateBot(id, data);
 
         if (!updatedBot) {

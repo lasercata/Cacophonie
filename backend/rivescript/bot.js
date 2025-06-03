@@ -33,11 +33,16 @@ class DiscordBot {
         // Message handling
         this.client.on("messageCreate", async (msg) => {
             if (msg.author.bot) return; // Ignore messages from bots
-            console.log(`📥 Message received: ${msg}`);
-            const reply = await this.chatbot.reply(msg.author.id, msg.content);
+            // Only reply if the bot is mentioned (pinged)
+            if (!msg.mentions.has(this.client.user)) return;
+            // Remove the bot mention from the message before sending it to the chatbot
+            const content = msg.content.replace(`<@${this.client.user.id}>`, "").trim();
+            console.log(`📥 Message received (pinged): ${msg.content}`);
+            const reply = await this.chatbot.reply(msg.author.id, content);
             msg.reply(reply);
             console.log(`📤 Reply sent: ${reply}`);
         });
+
 
         this.client.login(token);
         this.loadBehabiour();

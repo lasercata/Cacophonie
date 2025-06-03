@@ -1,6 +1,6 @@
 # Cacophonie
 
-## Setup
+## Setup and run
 ### Download
 Download the project:
 ```
@@ -35,6 +35,13 @@ And to start it with auto restart, run
 ```
 npm run start_auto_restart
 ```
+
+### Test API
+Once the server is launched, you can access the swagger via [http://localhost:8042/api/docs](http://localhost:8042/api/docs).
+The port might change, it is printed by the command launching the server.
+
+The endpoints described below are under `localhost:8042/api`.
+For example, the endpoint `/bots` is at `localhost:8042/api/bots`.
 
 ## Endpoints
 ### Main endpoints

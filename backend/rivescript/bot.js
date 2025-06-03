@@ -76,7 +76,7 @@ class DiscordBot {
                 });
             }
         } else {
-            console.log("❌ Error: status not handled!");
+            console.log(`❌ Error: ${status} not handled!`);
         }
     }
 
@@ -94,11 +94,11 @@ class DiscordBot {
         this.chatbot
             .loadFile(`backend/rivescript/brain/${this.rivescript}.rive`)
             .then(() => {
-                console.log("✅ RiveScript loaded successfully!");
+                console.log(`✅ ${this.rivescript}.rive loaded successfully!`);
                 this.chatbot.sortReplies();
             })
             .catch((error) => {
-                console.error("❌ Error loading RiveScript:", error);
+                console.error(`❌ Error loading ${this.rivescript}.rive:`, error);
             });
     }
 }

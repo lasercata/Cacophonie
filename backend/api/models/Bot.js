@@ -14,7 +14,7 @@ class Bot {
      * @param {Object} data - The bot data.
      * @param {number} [data.id=null] - The unique identifier of the bot.
      * @param {string} [data.name="Default Name"] - The name of the bot.
-     * @param {string} [data.status="offline"] - The current status of the bot (e.g., 'online', 'offline').
+     * @param {string} [data.status="invisible"] - The current status of the bot (e.g., 'online', 'invisible').
      * @param {string} [data.rivescript="backend/rivescript/brain/english.rive"] - The file path to the bot's RiveScript.
      */
     constructor(data) {
@@ -31,7 +31,7 @@ class Bot {
         /**
          * @type {string}
          */
-        this.status = data.status ?? 'offline';
+        this.status = data.status ?? 'invisible';
 
         /**
          * @type {string}

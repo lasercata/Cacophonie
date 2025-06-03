@@ -44,6 +44,7 @@ router.get('/', botController.getAllBots);
  *         description: status to set to the bot
  *         schema:
  *           type: string
+ *           default: invisible
  *           enum:
  *             - invisible
  *             - online

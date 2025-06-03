@@ -52,17 +52,41 @@ router.patch('/:id', botController.updateBot);
  */
 router.delete('/:id', botController.deleteBot);
 
-// // route GET /api/bots/:id/status
-// router.get('/:id/status', botController.getBotStatus);
-//
-// // route PATCH /api/bots/:id/status
-// router.patch('/:id/status', botController.updateBotStatus);
-//
-// // route GET /api/bots/:id/rivescript
-// router.get('/:id/rivescript', botController.getBotRivescript);
-//
-// // route PATCH /api/bots/:id/rivescript
-// router.patch('/:id/rivescript', botController.updateBotRivescript);
+/**
+ * @swagger
+ * /api/bots/:id/status:
+ *   get:
+ *     summary: Get a bot status
+ *     description: Get a bot status.
+ */
+router.get('/:id/status', botController.getBotStatus);
+
+/**
+ * @swagger
+ * /api/bots/:id/status:
+ *   update:
+ *     summary: Update  a  bot status
+ *     description: Update a bot status.
+ */
+router.patch('/:id/status', botController.updateBotStatus);
+
+/**
+ * @swagger
+ * /api/bots/:id/rivescript:
+ *   get:
+ *     summary: Get  a  bot rivescript
+ *     description: Get a  bot rivescript.
+ */
+router.get('/:id/rivescript', botController.getBotRivescript);
+
+/**
+ * @swagger
+ * /api/bots/:id/rivescript:
+ *   patch:
+ *     summary: Update  a  bot rivescript
+ *     description: Update a  bot rivescript.
+ */
+router.patch('/:id/rivescript', botController.updateBotRivescript);
 
 /**
  * @swagger

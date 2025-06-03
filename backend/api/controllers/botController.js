@@ -1,4 +1,6 @@
 const botService = require('../../services/botService');
+const fs = require('fs');
+const path = require('path');
 
 function getAllBots(req, res) {
     try {
@@ -88,11 +90,109 @@ function deleteBot(req, res) {
     }
 }
 
-const getBotStatus = (req, res) => {};
-const updateBotStatus = (req, res) => {};
-const getBotRivescript = (req, res) => {};
-const updateBotRivescript = (req, res) => {};
-const getConversationsByBotId = (req, res) => {};
+/**
+ * Retrieves the status of a bot by ID.
+ *
+ * @param {Request} req - The incoming HTTP request
+ * @param {Response} res - The outgoing HTTP response
+ * @returns {void}
+ */
+function getBotStatus(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+        if (isNaN(id)) return res.status(400).json({ error: 'Invalid bot id' });
+
+        const bot = botService.getBotById(id);
+        if (!bot) return res.status(404).json({ error: 'Bot not found' });
+
+        res.json({ status: bot.status });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+/**
+ * Updates the status of a bot.
+ *
+ * @param {Request} req - The incoming HTTP request
+ * @param {Response} res - The outgoing HTTP response
+ * @returns {void}
+ */
+function updateBotStatus(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+        const { status } = req.body;
+
+        if (isNaN(id)) return res.status(400).json({ error: 'Invalid bot id' });
+        if (!status) return res.status(400).json({ error: 'Status is required' });
+
+        const updatedBot = botService.updateBot(id, { status });
+        if (!updatedBot) return res.status(404).json({ error: 'Bot not found' });
+
+        res.json({ message: 'Status updated', status: updatedBot.status });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+/**
+ * Reads and returns the RiveScript file content for a given bot.
+ *
+ * @param {Request} req - The incoming HTTP request
+ * @param {Response} res - The outgoing HTTP response
+ * @returns {void}
+ */
+function getBotRivescript(req, res) {
+    try {
+        const id = parseInt(req.params.id, 10);
+        if (isNaN(id)) return res.status(400).json({ error: 'Invalid bot id' });
+
+        const bot = botService.getBotById(id);
+        if (!bot) return res.status(404).json({ error: 'Bot not found' });
+
+        const rivescriptPath = bot.rivescript;
+        if (!rivescriptPath) return res.status(404).json({ error: 'No rivescript path found for this bot' });
+
+        let fullPath = path.join(__dirname, '..','..','..', rivescriptPath);
+        console.log(fullPath);
+        fs.readFile(fullPath, 'utf8', (err, data) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to read rivescript file' });
+            }
+            console.log(data);
+            res.type('text/plain').send(data);
+        });
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+/**
+ * Updates the path to the RiveScript file for a given bot.
+ *
+ * @param {Request} req - The incoming HTTP request
+ * @param {Response} res - The outgoing HTTP response
+ * @returns {void}
+ */
+function updateBotRivescript(req, res) {
+    try {
+        const id = parseInt(req.params.id, 10);
+        const { rivescript } = req.body;
+
+        if (isNaN(id)) return res.status(400).json({ error: 'Invalid bot id' });
+        if (!rivescript) return res.status(400).json({ error: 'Rivescript path is required' });
+
+        const updatedBot = botService.updateBot(id, { rivescript });
+        if (!updatedBot) return res.status(404).json({ error: 'Bot not found' });
+
+        res.json({ message: 'Rivescript path updated', rivescript: updatedBot.rivescript });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+function getConversationsByBotId (req, res) {};
 
 module.exports = {
     getAllBots,

@@ -28,7 +28,7 @@ router.use(
     swaggerUi.setup(
         specs, {
             explorer: true,
-            customCssUrl: 'https://cdn.jsdelivr.net/npm/[email protected]/themes/3.x/theme-newspaper.css'
+            // customCssUrl: 'https://cdn.jsdelivr.net/npm/[email protected]/themes/3.x/theme-newspaper.css'
         }
     )
 );

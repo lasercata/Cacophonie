@@ -42,7 +42,7 @@ router.get('/', botController.getAllBots);
  *                 type: string
  *               status:
  *                 type: string
- *                 default: off
+ *                 default: invisible
  *
  *     responses:
  *       '201':
@@ -52,7 +52,7 @@ router.get('/', botController.getAllBots);
  *       '500':
  *         description: server error
  */
-router.post('/', botController.createBot); //TODO: change the enum above
+router.post('/', botController.createBot);
 
 /**
  * @swagger
@@ -105,7 +105,6 @@ router.get('/:id', botController.getBotById);
  *         description: new status to set to the bot
  *         schema:
  *           type: string
- *           default: invisible
  *           enum:
  *             - invisible
  *             - online
@@ -149,42 +148,6 @@ router.patch('/:id', botController.updateBot);
  *         description: bot not found
  */
 router.delete('/:id', botController.deleteBot);
-
-/**
- * @swagger
- * /api/bots/:id/status:
- *   get:
- *     summary: Get a bot status
- *     description: Get a bot status.
- */
-router.get('/:id/status', botController.getBotStatus);
-
-/**
- * @swagger
- * /api/bots/:id/status:
- *   update:
- *     summary: Update  a  bot status
- *     description: Update a bot status.
- */
-router.patch('/:id/status', botController.updateBotStatus);
-
-/**
- * @swagger
- * /api/bots/:id/rivescript:
- *   get:
- *     summary: Get  a  bot rivescript
- *     description: Get a  bot rivescript.
- */
-router.get('/:id/rivescript', botController.getBotRivescript);
-
-/**
- * @swagger
- * /api/bots/:id/rivescript:
- *   patch:
- *     summary: Update  a  bot rivescript
- *     description: Update a  bot rivescript.
- */
-router.patch('/:id/rivescript', botController.updateBotRivescript);
 
 /**
  * @swagger

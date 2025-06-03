@@ -69,9 +69,6 @@ function createBot(req, res) {
         if (!data.name) {
             return res.status(400).json({ error: 'name is required' });
         }
-        if (!data.status) {
-            return res.status(400).json({ error: 'status is required' }); //TODO: do we really need the status to create a bot ?
-        }
 
         const newBot = botService.createBot(data);
         res.status(201).json(newBot);

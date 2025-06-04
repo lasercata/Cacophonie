@@ -10,7 +10,7 @@ function getAllConversations(req, res) {
 }
 
 function getConversationById(req, res) {
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(req.params.id);
 
     if (isNaN(id)) {
         return res.status(400).json({ error: 'Invalid conversation id' });

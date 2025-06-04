@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const botActions = require('../../workers/botActions');
+const { get } = require('http');
 
 /**
  * Sends json containing all the bots.
@@ -253,7 +254,14 @@ function updateBotRivescript(req, res) {
     }
 }
 
-function getConversationsByBotId (req, res) {};
+function getConversationsByBotId (req, res) {
+    const id = getBotById(req, res);
+    if (isNaN(id)) {
+        return res.status(400).json({ error: 'Invalid bot id' });
+    }
+    const conversation = fs.readFileSync('backend/logs/app_${this.botId}.log', 'utf8');
+    res.send(conversation);
+};
 
 module.exports = {
     getAllBots,

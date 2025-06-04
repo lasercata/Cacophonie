@@ -21,6 +21,29 @@ const conversationController = require('../controllers/conversationController');
  */
 router.get('/', conversationController.getAllConversations);
 
+/**
+ * @swagger
+ * /api/conversations/{id}:
+ *   get:
+ *     summary: Get a conversation by ID
+ *     description: Get a conversation by its ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the conversation to retrieve
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: successful operation
+ *       '400':
+ *         description: invalid ID supplied
+ *       '404':
+ *         description: conversation not found
+ */
+router.get('/:id', conversationController.getConversationById);
+
 // route GET /api/conversations/analytics
 //router.get('/analytics', conversationController.getConversationsAnalytics);
 

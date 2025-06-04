@@ -46,6 +46,8 @@ class DiscordBot {
             console.log(this.client.user);
             logger.info(this.client.user);
             this.getStatus()
+            this.disconnect()
+            this.connect()
         });
 
         // Message handling
@@ -105,6 +107,7 @@ class DiscordBot {
                 });
             }
         } else {
+            console.log(`❌ Error: ${status} not handled!`);
             logger.error(`❌ Error: ${status} not handled!`);
         }
     }
@@ -118,7 +121,9 @@ class DiscordBot {
         this.loadBehabiour();
     }
 
-    /** Loads the bot's rivescript. */
+    /** 
+     * Loads the bot's rivescript. 
+     */
     loadBehabiour() {
         this.chatbot
             .loadFile(`backend/rivescript/brain/${this.rivescript}.rive`)
@@ -132,9 +137,64 @@ class DiscordBot {
                 logger.error(`❌ Error loading ${this.rivescript}.rive:`, error);
             });
     }
+
+    /**
+     * Makes the bot invisible and disables message handling.
+     */
+    disconnect() {
+        if (this.client && this.client.user) {
+            // Set status to invisible
+            this.client.user.setStatus("invisible");
+            console.log("👻 Bot is now invisible.");
+            logger.info("👻 Bot is now invisible.");
+
+            // Remove the messageCreate listener to disable replies
+            this.client.removeAllListeners("messageCreate");
+            console.log("🔇 Message handling disabled.");
+            logger.info("🔇 Message handling disabled.");
+        } else {
+            console.log("❌ Error: Client not initialized or user not ready.");
+            logger.error("❌ Error: Client not initialized or user not ready.");
+        }
+    }
+
+    /**
+ * Makes the bot visible and re-enables message handling.
+ */
+    connect() {
+        if (this.client && this.client.user) {
+            // Set status to online
+            this.client.user.setStatus("online");
+            console.log("🟢 Bot is now online.");
+            logger.info("🟢 Bot is now online.");
+
+            // Re-enable message handling
+            this.client.on("messageCreate", async (msg) => {
+                if (msg.author.bot) return;
+
+                // Only respond when the bot is mentioned
+                const mentioned = msg.mentions.has(this.client.user);
+                if (!mentioned) return;
+
+                const cleanedContent = msg.content.replace(/<@!?(\d+)>/, "").trim(); // Remove mention
+                const reply = await this.chatbot.reply(msg.author.id, cleanedContent);
+                await msg.reply(reply);
+                console.log(`📤 Reply sent: ${reply}`);
+                logger.info(`📤 Reply sent: ${reply}`);
+            });
+
+            console.log("🔔 Message handling re-enabled.");
+            logger.info("🔔 Message handling re-enabled.");
+        } else {
+            console.log("❌ Error: Client not initialized or user not ready.");
+            logger.error("❌ Error: Client not initialized or user not ready.");
+        }
+    }
+
 }
 
 // Dirty instance created for test purposes
 const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
-bot.setStatus("idle");
+// bot.setStatus("idle");
 // bot.setRivescript('minimal_fr');
+// bot.disconnect()

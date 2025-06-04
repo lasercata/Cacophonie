@@ -21,7 +21,7 @@ describe('Bots API', () => {
         expect(res.body).toHaveProperty('id');
         expect(res.body.name).toBe(botData.name);
         expect(res.body.status).toBe(botData.status);
-        expect(res.body.rivescript).toBe('backend/rivescript/brain/english.rive');
+        expect(res.body.rivescript).toBe('default_en.rive');
 
         createdBotId = res.body.id;
     });
@@ -58,7 +58,7 @@ describe('Bots API', () => {
     });
 
     it('PATCH /api/bots/:id/rivescript - should update the bot rivescript path', async () => {
-        const newPath = 'backend/rivescript/brain/french.rive';
+        const newPath = 'default_en.rive';
         // const res = await request(app)
         //     .patch(`/api/bots/${createdBotId}/rivescript`)
         //     .send({ rivescript: newPath });

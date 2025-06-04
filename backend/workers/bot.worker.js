@@ -17,10 +17,9 @@ const logger = winston.createLogger({
     ],
 });
 
-// Création du chatbot
 const chatbot = new RiveScript();
 
-// Chargement dynamique du fichier `.rive`
+// Loading the rivescript
 function loadBehaviour(rivescriptName) {
     const filePath = `backend/rivescript/brain/${rivescriptName}.rive`;
     chatbot
@@ -36,10 +35,9 @@ function loadBehaviour(rivescriptName) {
         });
 }
 
-// Ecoute les messages du thread principal
+// Listens for the main thread messages
 parentPort.on('message', async (data) => {
     if (data.type === 'init') {
-        // Chargement du fichier RiveScript
         loadBehaviour(data.rivescript);
     }
 

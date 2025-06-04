@@ -76,6 +76,14 @@ class DiscordBot {
     }
 
     /**
+     * Gets the bot's id.
+     * @returns the bot's id
+     */
+    getId() {
+        return this.botId
+    }
+
+    /**
      * Multi-threading with bots behaviour.
      */
     startWorker() {

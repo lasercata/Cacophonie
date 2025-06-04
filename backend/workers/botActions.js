@@ -16,8 +16,44 @@ const discordBotModule = require("../rivescript/bot");
  */
 let bot_list = [];
 
+let tokens = [
+    process.env.DISCORD_BOT_TOKEN_1,
+    process.env.DISCORD_BOT_TOKEN_2,
+    process.env.DISCORD_BOT_TOKEN_3
+]
+let tokens_available = [
+    false,
+    false,
+    false
+]
+
 
 //------Functions
+/**
+ * Serve a token if available.
+ * Otherwise return -1
+ */
+function serveToken() {
+    //---Check if there is a usable token
+    if (!tokens_available.includes(false))
+        return -1
+
+    let idx = tokens_available.findIndex(false);
+    tokens_available[idx] = true;
+    return idx; //, tokens[idx];
+}
+
+/**
+ * Opposite of `serveToken`, make a token available.
+ *
+ * @param {string} tokenIndex -  Index of the token to free
+ */
+function freeToken(tokenIndex) {
+    if (tokenIndex >= 0 && tokenIndex < tokens_available.length) {
+        tokens_available[tokenIndex] = false;
+    }
+}
+
 /**
  * Creates a new bot with the provided data.
  *
@@ -29,7 +65,14 @@ let bot_list = [];
  * @returns {Bot} The newly created Bot instance.
  */
 function createBot(id, data) {
-    const newBot = new discordBotModule.DiscordBot(process.env.DISCORD_BOT_TOKEN_1); //TODO: do not hard code the value like this !
+    let tokenIndex = -1;
+
+    if (data.status == 'online') {
+        tokenIndex = serveToken();
+        if (tokenIndex == -1) throw new Error('No tokens available');
+    }
+
+    const newBot = new discordBotModule.DiscordBot(tokens[tokenIndex]);
 
     if (data.status !== undefined)
         newBot.setStatus(data.status);
@@ -64,8 +107,21 @@ function updateBot(id, data) {
     });
 
     // Update
-    if (data.status !== undefined)
+    if (data.status !== undefined) {
+        const currentStatus = bot.getStatus();
+        const currentTokenIndex =  tokens.findIndex(t => t === bot.getToken());
+
+        if (data.status === 'online' && currentStatus !== 'online') {
+            const newTokenIndex = serveToken();
+            if (newTokenIndex === -1) throw new Error('No tokens available');
+            bot.setToken(tokens[newTokenIndex]);
+
+        } else if (data.status === 'invisible' && currentStatus === 'online') {
+            freeToken(currentTokenIndex);
+        }
+
         bot_i.setStatus(data.status);
+    }
 
     if (data.rivescript !== undefined)
         bot_i.setRivescript(data.rivescript);
@@ -87,6 +143,10 @@ function disconnectBot(id) {
 
     // Disconnect
     bot_i.disconnect();
+
+    const tokenIndex = tokens.findIndex(t => t === bot.getToken());
+    freeToken(tokenIndex);
+    
 }
 
 //------Exports

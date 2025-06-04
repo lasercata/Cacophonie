@@ -1,6 +1,22 @@
 require("dotenv").config();
 const { Client, IntentsBitField } = require("discord.js");
 const RiveScript = require("rivescript");
+const winston = require("winston");
+
+// Logger created with the winston logging library
+const logger = winston.createLogger({
+    level: "info",
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json()
+    ),
+    transports: [
+        // in this file will be stored all the info logs
+        new winston.transports.File({ filename: "backend/logs/error.log", level: "warn" }),
+        // in this file will be stored all the error logs
+        new winston.transports.File({ filename: "backend/logs/app.log" }),
+    ],
+});
 
 /** Class to manage the discord bots. */
 class DiscordBot {
@@ -26,7 +42,9 @@ class DiscordBot {
         // Debug to assets the bot's connection and print the user values
         this.client.once("ready", () => {
             console.log(`✅ Logged in as ${this.client.user.tag}!`);
+            logger.info(`✅ Logged in as ${this.client.user.tag}!`);
             console.log(this.client.user);
+            logger.info(this.client.user);
             this.getStatus()
         });
 
@@ -38,9 +56,11 @@ class DiscordBot {
             // Remove the bot mention from the message before sending it to the chatbot
             const content = msg.content.replace(`<@${this.client.user.id}>`, "").trim();
             console.log(`📥 Message received (pinged): ${msg.content}`);
+            logger.info(`📥 Message received (pinged): ${msg.content}`);
             const reply = await this.chatbot.reply(msg.author.id, content);
             msg.reply(reply);
             console.log(`📤 Reply sent: ${reply}`);
+            logger.info(`📤 Reply sent: ${reply}`);
         });
 
 
@@ -56,9 +76,11 @@ class DiscordBot {
         if (this.client.user && this.client.user.presence) {
             const status = this.client.user.presence.status;
             console.log(`Current status is: ${status}`);
+            logger.info(`Current status is: ${status}`);
             return status;
         } else {
             console.log("❌ Error: Could not retrieve status.");
+            logger.error("❌ Error: Could not retrieve status.");
             return null;
         }
     }
@@ -73,15 +95,17 @@ class DiscordBot {
         if (validStatuses.includes(status)) {
             if (this.client.user) {
                 console.log(`Changing status to: ${status}`);
+                logger.info(`Changing status to: ${status}`);
                 this.client.user.setStatus(status);
             } else {
                 this.client.once("ready", () => {
                     console.log(`Changing status to: ${status}`);
+                    logger.info(`Changing status to: ${status}`);
                     this.client.user.setStatus(status);
                 });
             }
         } else {
-            console.log(`❌ Error: ${status} not handled!`);
+            logger.error(`❌ Error: ${status} not handled!`);
         }
     }
 
@@ -100,15 +124,17 @@ class DiscordBot {
             .loadFile(`backend/rivescript/brain/${this.rivescript}.rive`)
             .then(() => {
                 console.log(`✅ ${this.rivescript}.rive loaded successfully!`);
+                logger.info(`✅ ${this.rivescript}.rive loaded successfully!`);
                 this.chatbot.sortReplies();
             })
             .catch((error) => {
                 console.error(`❌ Error loading ${this.rivescript}.rive:`, error);
+                logger.error(`❌ Error loading ${this.rivescript}.rive:`, error);
             });
     }
 }
 
 // Dirty instance created for test purposes
 const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
-bot.setStatus("dnd");
-bot.setRivescript('minimal_fr');
+bot.setStatus("idle");
+// bot.setRivescript('minimal_fr');

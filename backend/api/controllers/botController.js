@@ -111,6 +111,8 @@ function updateBot(req, res) {
             return res.status(404).json({ error: 'Bot not found' });
         }
 
+        botActions.updateBot(id, data);
+
         res.json(updatedBot);
     }
     catch (err) {
@@ -139,6 +141,8 @@ function deleteBot(req, res) {
         if (!success) {
             return res.status(404).json({ error: 'Bot not found' });
         }
+
+        botActions.disconnectBot(id);
 
         res.status(204).send();
     }

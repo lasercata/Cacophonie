@@ -42,7 +42,7 @@ if (require.main === module) {
 
         //------Create all the bots from the db
         let bots = botServices.getBots();
-        bots.map(bot => {botActions.createBot(bot.getId(), {})})
+        bots.map(bot => {botActions.createBot(bot.getId(), {status: bot.getStatus(), rivescript: bot.getRivescript()})})
     });
 }
 

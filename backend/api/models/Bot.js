@@ -45,6 +45,20 @@ class Bot {
     getId() {
         return this.id;
     }
+
+    /**
+     * Getter for `status`
+     */
+    getStatus() {
+        return this.status;
+    }
+
+    /**
+     * Getter for `rivescript`
+     */
+    getRivescript() {
+        return this.rivescript;
+    }
 }
 
 module.exports = Bot;

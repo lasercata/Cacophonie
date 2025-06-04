@@ -37,8 +37,11 @@ function createBot(id, data) {
     if (data.rivescript !== undefined)
         newBot.setRivescript(data.rivescript);
 
-    // bot_list.push(newBot);
-    bot_list[id] = newBot;
+    // Add to `bot_list`
+    let tmp = {}
+    tmp[id] = newBot;
+    bot_list.push(tmp);
+    // bot_list[id] = newBot;
 
     return newBot;
 }
@@ -48,30 +51,47 @@ function createBot(id, data) {
  *
  * @param {number} id - The ID of the bot to update.
  * @param {Object} data - The fields to update in the bot.
- * @returns {Bot|null} The updated Bot instance, or null if not found.
+ * @param {string} [data.status] - The status of the bot.
+ * @param {string} [data.rivescript] - Optional path to the Rivescript file.
  */
 function updateBot(id, data) {
-    const bot = bot_list[id];
+    // Get the bot with the id
+    let bot_i;
+    bot_list.map(obj => {
+        if (Object.keys(obj)[0] == id) {
+            bot_i = obj[id];
+        }
+    });
 
-    // bot.
+    // Update
+    if (data.status !== undefined)
+        bot_i.setStatus(data.status);
 
-    // const bots = getBots();
-    // const index = bots.findIndex(bot => bot.id === id);
-    //
-    // if (index === -1) {
-    //     return null;
-    // }
-    // 
-    // const updatedData = { ...bots[index], ...data };
-    // const updatedBot = new Bot(updatedData);
-    //
-    // bots[index] = updatedBot;
-    // db.set("bots", bots);
-    // return bots[index];
+    if (data.rivescript !== undefined)
+        bot_i.setRivescript(data.rivescript);
+}
+
+/**
+ * Disconnects the bot of id `id`.
+ *
+ * @param {number} id - the bot id
+ */
+function disconnectBot(id) {
+    // Get the bot with the id
+    let bot_i;
+    bot_list.map(obj => {
+        if (Object.keys(obj)[0] == id) {
+            bot_i = obj[id];
+        }
+    });
+
+    // Disconnect
+    bot_i.disconnect();
 }
 
 //------Exports
 module.exports = {
     createBot,
-    updateBot
+    updateBot,
+    disconnectBot
 };

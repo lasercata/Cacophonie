@@ -192,7 +192,8 @@ class DiscordBot {
      */
     loadBehabiour() {
         this.chatbot
-            .loadFile(`backend/rivescript/brain/${this.rivescript}.rive`)
+            // .loadFile(`backend/rivescript/brain/${this.rivescript}.rive`)
+            .loadFile(`backend/rivescript/brain/${this.rivescript}`)
             .then(() => {
                 console.log(`✅ ${this.rivescript}.rive loaded successfully!`);
                 this.logger?.info(`✅ ${this.rivescript}.rive loaded successfully!`);

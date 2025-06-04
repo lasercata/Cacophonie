@@ -72,11 +72,12 @@ function createBot(id, data) {
         if (tokenIndex == -1) throw new Error('No tokens available');
     }
 
-    console.log('here', tokenIndex)
+    console.log('here', tokenIndex, Math.max(tokenIndex, 0))
     console.log(tokens[tokenIndex])
 
     // const newBot = new discordBotModule.DiscordBot(tokens[tokenIndex]);
-    const newBot = new discordBotModule.DiscordBot(tokens[0]);
+    // const newBot = new discordBotModule.DiscordBot(tokens[0]);
+    const newBot = new discordBotModule.DiscordBot(tokens[Math.max(tokenIndex, 0)]);
 
     if (data.status !== undefined)
         newBot.setStatus(data.status);

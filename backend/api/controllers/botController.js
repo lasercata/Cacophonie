@@ -75,8 +75,8 @@ function createBot(req, res) {
         if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
             return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
-        botActions.createBot(newBot.getId(), data);
         const newBot = botService.createBot(data);
+        botActions.createBot(newBot.getId(), data);
         res.status(201).json(newBot);
     }
     catch (err) {
@@ -101,6 +101,8 @@ function updateBot(req, res) {
         }
 
         const data = req.query;
+        // const data = req.body;
+        //TODO
 
         if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
             return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });

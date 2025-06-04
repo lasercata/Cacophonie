@@ -51,8 +51,6 @@ describe('Bots API', () => {
         const res = await request(app)
             .patch(`/api/bots/${createdBotId}?status=invisible`);
 
-        console.log(res)
-
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBe('invisible');
     });

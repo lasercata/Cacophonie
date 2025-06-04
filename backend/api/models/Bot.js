@@ -38,6 +38,13 @@ class Bot {
          */
         this.rivescript = data.rivescript ?? 'default_en.rive';
     }
+
+    /**
+     * Getter for the `id` attribute
+     */
+    getId() {
+        return this.id;
+    }
 }
 
 module.exports = Bot;

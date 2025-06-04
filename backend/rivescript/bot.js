@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const { Client, IntentsBitField } = require("discord.js");
 const RiveScript = require("rivescript");
 const winston = require("winston");
@@ -46,8 +47,6 @@ class DiscordBot {
             console.log(this.client.user);
             logger.info(this.client.user);
             this.getStatus()
-            this.disconnect()
-            this.connect()
         });
 
         // Message handling
@@ -159,8 +158,8 @@ class DiscordBot {
     }
 
     /**
- * Makes the bot visible and re-enables message handling.
- */
+     * Makes the bot visible and re-enables message handling.
+     */
     connect() {
         if (this.client && this.client.user) {
             // Set status to online
@@ -190,11 +189,15 @@ class DiscordBot {
             logger.error("❌ Error: Client not initialized or user not ready.");
         }
     }
-
 }
 
 // Dirty instance created for test purposes
-const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
+// const bot = new DiscordBot(process.env.DISCORD_BOT_TOKEN_1);
 // bot.setStatus("idle");
 // bot.setRivescript('minimal_fr');
 // bot.disconnect()
+
+
+module.exports = {
+    DiscordBot
+};

@@ -7,6 +7,8 @@ const botService = require('../../services/botService');
 const fs = require('fs');
 const path = require('path');
 
+const botActions = require('../../workers/botActions');
+
 /**
  * Sends json containing all the bots.
  *
@@ -74,6 +76,7 @@ function createBot(req, res) {
             return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
         const newBot = botService.createBot(data);
+        botActions.createBot(newBot.getId(), data);
         res.status(201).json(newBot);
     }
     catch (err) {

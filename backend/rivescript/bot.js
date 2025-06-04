@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { Worker } = require('worker_threads');
 const { Client, IntentsBitField } = require("discord.js");
 const RiveScript = require("rivescript");
 const winston = require("winston");
@@ -46,28 +47,53 @@ class DiscordBot {
             console.log(this.client.user);
             logger.info(this.client.user);
             this.getStatus()
-            this.disconnect()
-            this.connect()
+            this.client.user.setUsername('CeciEstAussiUnTest')
         });
 
-        // Message handling
-        this.client.on("messageCreate", async (msg) => {
-            if (msg.author.bot) return; // Ignore messages from bots
-            // Only reply if the bot is mentioned (pinged)
+        this.worker = new Worker('./backend/workers/bot.worker.js')
+
+        // Loads the rivescript in the bot
+        this.worker.postMessage({
+            type: 'init',
+            rivescript: 'minimal_fr'
+        });
+
+        this.client.on('messageCreate', async (msg) => {
+            if (msg.author.bot) return;
             if (!msg.mentions.has(this.client.user)) return;
-            // Remove the bot mention from the message before sending it to the chatbot
-            const content = msg.content.replace(`<@${this.client.user.id}>`, "").trim();
-            console.log(`📥 Message received (pinged): ${msg.content}`);
-            logger.info(`📥 Message received (pinged): ${msg.content}`);
-            const reply = await this.chatbot.reply(msg.author.id, content);
-            msg.reply(reply);
-            console.log(`📤 Reply sent: ${reply}`);
-            logger.info(`📤 Reply sent: ${reply}`);
-        });
 
+            const content = msg.content.replace(`<@${this.client.user.id}>`, '').trim();
+
+            // Bot message handling
+            this.worker.postMessage({
+                type: 'message',
+                userId: msg.author.id,
+                content
+            });
+            console.log(`📥 Message received (pinged): ${content}`);
+            logger.info(`📥 Message received (pinged): ${content}`);
+
+            // Bot reply handling
+            this.worker.once('message', ({ reply }) => {
+                msg.reply(reply);
+                console.log(`📤 Reply sent: ${reply}`);
+                logger.info(`📤 Reply sent: ${reply}`);
+            });
+        });
 
         this.client.login(token);
-        this.loadBehabiour();
+    }
+
+    /**
+     * Sets the bot's username on the server.
+     * @param {string} username new bot's username
+     */
+    setUsername(username) {
+        if (this.client.user) {
+            this.client.user.setUsername(username)
+            console.log(`New username set to : ${username}`)
+            logger.info(`New username set to : ${username}`)
+        }
     }
 
     /**

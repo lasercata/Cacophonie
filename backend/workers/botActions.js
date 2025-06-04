@@ -38,7 +38,7 @@ function serveToken() {
     if (!tokens_available.includes(false))
         return -1
 
-    let idx = tokens_available.findIndex(false);
+    let idx = tokens_available.findIndex(t => t == false);
     tokens_available[idx] = true;
     return idx; //, tokens[idx];
 }
@@ -72,7 +72,11 @@ function createBot(id, data) {
         if (tokenIndex == -1) throw new Error('No tokens available');
     }
 
-    const newBot = new discordBotModule.DiscordBot(tokens[tokenIndex]);
+    console.log('here', tokenIndex)
+    console.log(tokens[tokenIndex])
+
+    // const newBot = new discordBotModule.DiscordBot(tokens[tokenIndex]);
+    const newBot = new discordBotModule.DiscordBot(tokens[0]);
 
     if (data.status !== undefined)
         newBot.setStatus(data.status);
@@ -108,13 +112,13 @@ function updateBot(id, data) {
 
     // Update
     if (data.status !== undefined) {
-        const currentStatus = bot.getStatus();
-        const currentTokenIndex =  tokens.findIndex(t => t === bot.getToken());
+        const currentStatus = bot_i.getStatus();
+        const currentTokenIndex =  tokens.findIndex(t => t === bot_i.getToken());
 
         if (data.status === 'online' && currentStatus !== 'online') {
             const newTokenIndex = serveToken();
             if (newTokenIndex === -1) throw new Error('No tokens available');
-            bot.setToken(tokens[newTokenIndex]);
+            bot_i.setToken(tokens[newTokenIndex]);
 
         } else if (data.status === 'invisible' && currentStatus === 'online') {
             freeToken(currentTokenIndex);
@@ -144,7 +148,7 @@ function disconnectBot(id) {
     // Disconnect
     bot_i.disconnect();
 
-    const tokenIndex = tokens.findIndex(t => t === bot.getToken());
+    const tokenIndex = tokens.findIndex(t => t === bot_i.getToken());
     freeToken(tokenIndex);
     
 }

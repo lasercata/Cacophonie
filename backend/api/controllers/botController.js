@@ -75,8 +75,8 @@ function createBot(req, res) {
         if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
             return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
-        const newBot = botService.createBot(data);
         botActions.createBot(newBot.getId(), data);
+        const newBot = botService.createBot(data);
         res.status(201).json(newBot);
     }
     catch (err) {
@@ -105,13 +105,12 @@ function updateBot(req, res) {
         if (data.status !== undefined && (! ['invisible', 'online', 'dnd', 'idle'].includes(data.status)))
             return res.status(400).json({ error: 'status attribute not in [invisible, online, dnd, idle]' });
 
+        botActions.updateBot(id, data);
         const updatedBot = botService.updateBot(id, data);
 
         if (!updatedBot) {
             return res.status(404).json({ error: 'Bot not found' });
         }
-
-        botActions.updateBot(id, data);
 
         res.json(updatedBot);
     }
@@ -136,13 +135,12 @@ function deleteBot(req, res) {
             return res.status(400).json({ error: 'Invalid bot id' });
         }
 
+        botActions.disconnectBot(id);
         const success = botService.deleteBot(id);
 
         if (!success) {
             return res.status(404).json({ error: 'Bot not found' });
         }
-
-        botActions.disconnectBot(id);
 
         res.status(204).send();
     }

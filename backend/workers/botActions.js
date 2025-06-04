@@ -44,13 +44,14 @@ function serveToken() {
 }
 
 /**
- * Opposite of `serveToken`.
+ * Opposite of `serveToken`, make a token available.
  *
- * @param {string} token - the token to free
+ * @param {string} tokenIndex -  Index of the token to free
  */
-function freeToken(token) {
-    const idx = tokens.findIndex(token);
-    tokens_available[idx] = false;
+function freeToken(tokenIndex) {
+    if (tokenIndex >= 0 && tokenIndex < tokens_available.length) {
+        tokens_available[tokenIndex] = false;
+    }
 }
 
 /**
@@ -64,12 +65,14 @@ function freeToken(token) {
  * @returns {Bot} The newly created Bot instance.
  */
 function createBot(id, data) {
-    const tk = serveToken();
+    let tokenIndex = -1;
 
-    if (tk == -1)
-        throw 
+    if (data.status == 'online') {
+        tokenIndex = serveToken();
+        if (tokenIndex == -1) throw new Error('No tokens available');
+    }
 
-    const newBot = new discordBotModule.DiscordBot(tk);
+    const newBot = new discordBotModule.DiscordBot(tokens[tokenIndex]);
 
     if (data.status !== undefined)
         newBot.setStatus(data.status);
@@ -105,12 +108,17 @@ function updateBot(id, data) {
 
     // Update
     if (data.status !== undefined) {
-        let tk;
+        const currentStatus = bot.getStatus();
+        const currentTokenIndex =  tokens.findIndex(t => t === bot.getToken());
 
-        if (data.status == 'online')
-            tk = serveToken();
-        // else if (data.status == 'invisible')
-        //     freeToken(bot_i.getToken()); //TODO
+        if (data.status === 'online' && currentStatus !== 'online') {
+            const newTokenIndex = serveToken();
+            if (newTokenIndex === -1) throw new Error('No tokens available');
+            bot.setToken(tokens[newTokenIndex]);
+
+        } else if (data.status === 'invisible' && currentStatus === 'online') {
+            freeToken(currentTokenIndex);
+        }
 
         bot_i.setStatus(data.status);
     }
@@ -136,7 +144,9 @@ function disconnectBot(id) {
     // Disconnect
     bot_i.disconnect();
 
-    // freeToken(bot_i.getToken())
+    const tokenIndex = tokens.findIndex(t => t === bot.getToken());
+    freeToken(tokenIndex);
+    
 }
 
 //------Exports

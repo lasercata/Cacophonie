@@ -157,7 +157,7 @@ router.patch('/:id', botController.updateBot);
  *           format: int64
  *
  *     responses:
- *       '200':
+ *       '204':
  *         description: successful operation
  *       '404':
  *         description: bot not found

@@ -10,6 +10,9 @@ const path = require('path')
 // const swaggerUIPath  = require('swagger-ui-express');
 // const swaggerJsonFilePath  = require('./api/docs/swagger.json');
 
+const botServices = require('./services/botService');
+const botActions = require('./workers/botActions');
+
 const app = express();
 const PORT = 8042;
 
@@ -34,7 +37,12 @@ app.get('/', (req, res) => {
 if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`Cacaphonie server started on port ${PORT}`);
+
         // workers call
+
+        //------Create all the bots from the db
+        let bots = botServices.getBots();
+        bots.map(bot => {botActions.createBot(bot.getId(), {status: bot.getStatus(), rivescript: bot.getRivescript()})})
     });
 }
 

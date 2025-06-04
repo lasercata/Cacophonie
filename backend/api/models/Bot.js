@@ -15,7 +15,7 @@ class Bot {
      * @param {number} [data.id=null] - The unique identifier of the bot.
      * @param {string} [data.name="Default Name"] - The name of the bot.
      * @param {string} [data.status="invisible"] - The current status of the bot (e.g., 'online', 'invisible').
-     * @param {string} [data.rivescript="backend/rivescript/brain/english.rive"] - The file path to the bot's RiveScript.
+     * @param {string} [data.rivescript="default_en.rive"] - The file path to the bot's RiveScript.
      */
     constructor(data) {
         /**
@@ -36,7 +36,28 @@ class Bot {
         /**
          * @type {string}
          */
-        this.rivescript = data.rivescript ?? 'backend/rivescript/brain/english.rive';
+        this.rivescript = data.rivescript ?? 'default_en.rive';
+    }
+
+    /**
+     * Getter for the `id` attribute
+     */
+    getId() {
+        return this.id;
+    }
+
+    /**
+     * Getter for `status`
+     */
+    getStatus() {
+        return this.status;
+    }
+
+    /**
+     * Getter for `rivescript`
+     */
+    getRivescript() {
+        return this.rivescript;
     }
 }
 
